@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your thoughts tell who you are | Reasoning Patterns of LRMs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="hero" id="top">
+    <div class="hero__content container">
+      <!-- <p class="hero__tag">Large Reasoning Models &bull; LOT</p> -->
+      <h1>Your thoughts tell who you are</h1>
+      <p class="hero__subtitle">Characterizing the reasoning patterns of large reasoning models by building an open, LLM-proposed taxonomy of how they think.</p>
+      <p class="authors">Yida Chen, Yuning Mao, Xianjun Yang, Suyu Ge, Shengjie Bi, Lijuan Liu, Saghar Hosseini, Liang Tan, Yixin Nie, Shaoliang Nie</p>
+      <p class="affiliations">Harvard University &middot; Meta Superintelligence Labs</p>
+      <div class="hero__cta">
+        <a class="btn" href="https://arxiv.org/pdf/2509.24147">Preprint (arXiv)</a>
+        <a class="btn btn--ghost" href="#insights">Findings</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section container" id="overview">
+      <div class="section__header">
+        <h2>Why LOT?</h2>
+        <p>LOT (LLM-proposed Open Taxonomy) inductively discovers the reasoning traits that distinguish LRMs, annotates new traces with these traits, and trains a lightweight classifier to quantify how models think.</p>
+      </div>
+      <div class="stats-grid">
+        <article class="stat-card">
+          <h3>12 LRMs x 5 datasets</h3>
+          <p>24,444 reasoning traces spanning GPQA-Diamond, MATH-500, AIME 24/25, CRUXEVAL, and LiveCodeBench (execution).</p>
+        </article>
+        <article class="stat-card">
+          <h3>80&ndash;100% trace classification</h3>
+          <p>LOT separates reasoning from models that differ in scale, base family, or specialization, outperforming few-shot prompting, VML, and fixed taxonomies by up to 23.8%.</p>
+        </article>
+        <article class="stat-card">
+          <h3>Human-readable features</h3>
+          <p>Reasoning differences such as circular self-checks, visualization habits, or coding-based math strategies are named and defined in natural language.</p>
+        </article>
+        <article class="stat-card">
+          <h3>+3.3&ndash;5.7% GPQA gains</h3>
+          <p>Editing smaller Qwen3 models' reasoning to emphasize useful LOT features improves answer accuracy without touching weights.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="lot">
+      <div class="section__header">
+        <h2>LOT in a nutshell</h2>
+        <p>LOT is inspired by inductive coding in qualitative research: the taxonomy grows with the data instead of being fixed upfront.</p>
+      </div>
+      <div class="method-grid">
+        <article>
+          <h3>1. Propose distinguishing traits</h3>
+          <p>Llama3.3-70B compares paired traces from two LRMs solving the same problem and verbalizes reasoning differences such as <em>premature hypothesis switching</em> or <em>simulated execution of code</em>.</p>
+        </article>
+        <article>
+          <h3>2. Annotate and encode</h3>
+          <p>The same LLM tags new traces with the proposed traits. We create two encodings: PoR (pattern-of-reasoning, binary) and BoR (bag-of-reasoning, frequency-aware).</p>
+        </article>
+        <article>
+          <h3>3. Train &amp; expand</h3>
+          <p>A logistic classifier predicts the source model. When it misclassifies a trace, LOT asks the LLM to expand the taxonomy with new features and retries, keeping the feature set open.</p>
+        </article>
+        <article>
+          <h3>4. Inspectable taxonomy</h3>
+          <p>The resulting feature list acts as a readable report of how two LRMs differ. These features can be aggregated, visualized, and used to guide reasoning interventions.</p>
+        </article>
+      </div>
+      <div class="definitions">
+        <h4>PoR vs. BoR encodings</h4>
+        <p><strong>PoR</strong> tracks whether a behavior appears at all in a trace. <strong>BoR</strong> retains frequency information via KNN-imputed counts, which is vital for long GPQA and AIME solutions.</p>
+      </div>
+    </section>
+
+    <section class="section container" id="insights">
+      <div class="section__header">
+        <h2>What LOT reveals</h2>
+        <p>Three axes&mdash;model scale, base family, and domain specialization&mdash;lead to distinct reasoning signatures.</p>
+      </div>
+
+      <article class="insight" style="grid-template-columns: none;">
+        <h3>Scaling up improves discipline</h3>
+        <figure class="figure-wide">
+            <img src="png_figures/five_model_at_different_scale_larger.png" alt="LOT classification accuracy for Qwen3 variants versus Qwen3-32B" class="figure-img" loading="lazy" />
+            <figcaption>Classification accuracy when distinguishing Qwen3-32B from its distilled variants.</figcaption>
+          </figure>
+        <div style="flex-direction: row; display: flex; gap: 30px;">
+          <div class="insight__text" style="width: 30%;">
+            
+            <p>Comparing five smaller Qwen3 variants with Qwen3-32B yields 80&ndash;93% accuracy on GPQA. Larger models consistently verify their chosen theory, keep track of constraints, and avoid circular evidence loops.</p>
+            <ul class="insight__points">
+              <li>BoR encodings add 3&ndash;14% accuracy over PoR by emphasizing how often a strategy appears.</li>
+              <li>Smaller models frequently restate the same fact, lose track of which law applies, and switch concepts mid-solution.</li>
+              <li>Even text-only models sometimes "visualize" molecules by writing structural formulas&mdash;LOT surfaces how often this happens per model.</li>
+            </ul>
+          </div>
+          <div class="figure-pair" style="width: 70%;">
+            
+            <figure>
+              <img src="png_figures/bar_boxed_bor_por_model_at_different_scales.png" alt="Bar chart of distinguishing reasoning behaviors between Qwen3 variants and Qwen3-32B on GPQA" class="figure-img" loading="lazy" />
+              <figcaption>LOT highlights which behaviors point to the large model versus the smaller one (GPQA).</figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="insight">
+        <div style="display: flex; flex-direction: column; grid-column: 1 / -1;">
+          <h3>Base models leave a fingerprint</h3>
+          <p>When models share the same pretraining family (e.g., Qwen descendants), they become harder to distinguish; cross-family pairs (Phi, Mistral, Nemotron) display sharper contrasts.</p>
+        </div>
+        <div style="display: flex; flex-direction: row; grid-column: 1 / -1;">
+          <figure class="figure-wide">
+            <img src="png_figures/bor_por_model_from_different_base.png" alt="Heatmap of classification accuracy across LRMs fine-tuned from different base models" class="figure-img" loading="lazy" />
+            <figcaption>Heatmap of LOT classification accuracy across six LRMs fine-tuned from different bases.</figcaption>
+          </figure>
+          <!-- <figure>
+            <img src="png_figures/case_study_bor_LCB.png" alt="Case study comparing Qwen3-14B and QwQ-32B behaviors on LiveCodeBench" class="figure-img" loading="lazy" />
+            <figcaption>Qwen3-14B vs. QwQ-32B on LiveCodeBench: six most discriminative BoR features.</figcaption>
+          </figure> -->
+        </div>
+        <div style="display: flex; flex-direction: column; grid-column: 1 / -1;">
+          <div class="insight__text">
+            <ul class="insight__points">
+              <li>PoR often saturates on long GPQA/AIME traces, but BoR keeps accuracy high by focusing on frequency signatures.</li>
+              <li>Case study: Qwen3-14B simulates Python programs on LiveCodeBench, while QwQ-32B reasons by inspecting parameters and recursion depth.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="insight">
+        <div class="insight__text">
+          <h3>Domain training can "stick"</h3>
+          <p>Seed-Coder-8B-Reasoning, tuned on coding data, occasionally solves MATH-500 problems by writing and executing Python functions. Qwen3-8B only uses code when forced to interpret diagrams.</p>
+          <ul class="insight__points">
+            <li>LOT reveals that Seed-Coder borrows coding heuristics for 20% of math problems, compared to 2% for Qwen3-8B.</li>
+            <li>This inertia explains why specialized models may overfit their preferred modalities even on out-of-domain questions.</li>
+          </ul>
+        </div>
+        <figure>
+          <img src="png_figures/short_case_study_seed_coder_por.png" alt="PoR stats comparing Qwen3-8B and Seed-Coder reasoning habits" class="figure-img" loading="lazy" />
+          <figcaption>Seed-Coder's coding-flavored reasoning habits emerge clearly in LOT's PoR statistics.</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section class="section container" id="patterns">
+      <div class="section__header">
+        <h2>Interesting reasoning patterns identified by LOT</h2>
+        <p>The qualitative taxonomy in Appendix B surfaced recurring habits that are easy to miss when only reading final answers.</p>
+      </div>
+      <div class="patterns">
+        <div class="patterns__text">
+          <p class="pattern__label" id="pattern-label">Seed-Coder-8B &middot; MATH-500</p>
+          <h3 id="pattern-title">Seed-Coder defaults to code-based math reasoning</h3>
+          <p id="pattern-description">When faced with contest-math questions, Seed-Coder often writes pseudocode and executes it mentally or via Python snippets, whereas Qwen3-8B leans on human-style derivations.</p>
+          <ul class="insight__points" id="pattern-points"></ul>
+          <div class="pattern__controls">
+            <button class="pattern-btn" type="button" id="pattern-prev" aria-label="Previous reasoning pattern">&larr; Prev</button>
+            <div class="pattern-dots" id="pattern-dots"></div>
+            <button class="pattern-btn" type="button" id="pattern-next" aria-label="Next reasoning pattern">Next &rarr;</button>
+          </div>
+        </div>
+        <figure class="patterns__figure">
+          <div class="patterns__image-frame">
+            <img id="pattern-image" src="png_figures/code-based-reasoning.png" alt="Comparison of Seed-Coder and Qwen3 reasoning steps on a MATH-500 problem, showing pseudocode usage" class="gallery-image" loading="lazy" />
+          </div>
+          <figcaption id="pattern-caption">Seed-Coder writes and "executes" code blocks to solve math questions, unlike Qwen3-8B.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section container" id="intervention">
+      <div class="section__header">
+        <h2>From reasoning gaps to performance gains</h2>
+        <p>LOT's features are not just descriptive&mdash;they serve as levers for editing thoughts.</p>
+      </div>
+      <div>
+          <p>We compute odds ratios that link each reasoning feature to correctness on GPQA. Instead of asking models to obey explicit thought-level commands (which they fail to do), we summarize their original trace, edit the summary according to LOT insights, and re-expand it into a new reasoning script.</p>
+          <ul class="insight__points">
+            <li>Encouraging verification steps and pruning redundant analysis boosts GPQA accuracy for Qwen3-0.6B/4B/8B by 3.3&ndash;5.7%.</li>
+            <li>Summaries keep edits within context limits (&lt;32K tokens) and separate intervention from final-answer decoding.</li>
+            <li>Causal story: removing "inconsistent application of scientific principles" features reliably reduces mistakes.</li>
+          </ul>
+        </div>
+      <div class="intervention">
+        
+        <figure class="figure-wide">
+          <img src="png_figures/intervention_pipeline_boxed_sd_label.png" alt="Pipeline diagram connecting odds ratios, summary edits, and improved GPQA accuracy" class="figure-img" loading="lazy" />
+          <figcaption>LOT-driven pipeline: identify correlated features, edit reasoning summaries, and re-expand to improved thoughts.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section container" id="instruction-following">
+      <div class="section__header">
+        <h2>Instruction following inside the reasoning trace is brittle</h2>
+        <p>Appendix C tests whether LRMs can add a simple sentence (&ldquo;I am a large language model.&rdquo;) at the start of their thinking. Almost all models fail.</p>
+      </div>
+      <div>
+          <ul class="insight__points">
+            <li>Even when the instruction only targets the first 100 reasoning words, most LRMs place the sentence elsewhere or only after reasoning finishes.</li>
+            <li>Qwen3-8B and Magistral-Small barely clear 50% compliance; Phi-4-RP tends to follow the instruction but inserts it in the final response instead of the thinking channel.</li>
+            <li>Because we cannot rely on this level of control, LOT interventions summarize, edit, and re-expand traces instead of issuing inline commands.</li>
+          </ul>
+        </div>
+      <div class="instruction-grid">
+        
+        <figure class="figure-wide">
+          <img src="png_figures/baseline_intervention_experiment_additional.png" alt="Bar chart of LRMs failing to insert the requested sentence at the start of reasoning" class="figure-img" loading="lazy" />
+          <figcaption>Simple phrasing control remains out of reach for most open LRMs, underscoring the need for edit-based interventions.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section container" id="stability">
+      <div class="section__header">
+        <h2>Stability & dataset</h2>
+        <p>The taxonomy discovered by LOT is robust across random seeds and grounded in a large-scale reasoning corpus.</p>
+      </div>
+      <div class="stability-grid">
+        <figure>
+          <img src="png_figures/stability_phi_4_ds_qwen_better_color.png" alt="t-SNE visualization of LOT feature clusters across seeds" class="figure-img" loading="lazy" />
+          <figcaption>Features generated across five seeds cluster into consistent themes; majority appear in &ge;4 runs.</figcaption>
+        </figure>
+        <div>
+          <h3>Reasoning dataset</h3>
+          <ul class="insight__points">
+            <li>24,444 traces sampled with official hyperparameters from open-weight LRMs.</li>
+            <li>Neutral codenames hide scale/family cues when prompting the annotator.</li>
+            <li>Train/test splits: 80/20 for GPQA, MATH-500, CRUXEVAL, LiveCodeBench; 75/25 for AIME.</li>
+            <li>All annotations and updates use Llama3.3-70B-Instruct with consistent sampling settings.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="bibtex">
+      <div class="section__header">
+        <h2>Citation</h2>
+        <!-- <p>If you build on LOT or our findings, please cite the paper.</p> -->
+      </div>
+      <pre class="code-block"><code>@article{chen2025your,
+  title={Your thoughts tell who you are: Characterize the reasoning patterns of LRMs},
+  author={Chen, Yida and Mao, Yuning and Yang, Xianjun and Ge, Suyu and Bi, Shengjie and Liu, Lijuan and Hosseini, Saghar and Tan, Liang and Nie, Yixin and Nie, Shaoliang},
+  journal={arXiv preprint arXiv:2509.24147},
+  year={2025}
+}</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer__content">
+      <p>Questions? Contact <a href="mailto:yidachen@g.harvard.edu">yidachen@g.harvard.edu</a> or <a href="mailto:snie@meta.com">snie@meta.com</a>.</p>
+      <a class="btn btn--ghost" href="#top">Back to top</a>
+    </div>
+  </footer>
+  <script>
+    (function () {
+      const slides = [
+        {
+          label: 'Seed-Coder-8B \u00b7 MATH-500',
+          title: 'Seed-Coder defaults to code-based math reasoning',
+          description: 'When faced with contest-math questions, Seed-Coder often writes pseudocode and executes it mentally or via Python snippets, whereas Qwen3-8B leans on human-style derivations.',
+          points: [
+            'LOT records code-based reasoning in roughly 20% of Seed-Coder\'s math traces but only 2% of Qwen3-8B\'s.',
+            'Seed-Coder simulates loops over divisors or enumerates states to reach the answer instead of simplifying algebraically.',
+            'Even when no code is provided in the prompt, Seed-Coder introduces Python as a reasoning scaffold\u2014evidence of domain inertia.'
+          ],
+          image: 'png_figures/code-based-reasoning.png',
+          alt: 'Comparison of Seed-Coder and Qwen3 reasoning steps on a MATH-500 problem, showing pseudocode usage',
+          caption: 'Seed-Coder writes and "executes" code blocks to solve math questions, unlike Qwen3-8B.'
+        },
+        {
+          label: 'Phi-4-RP \u00b7 CRUXEVAL',
+          title: 'Phi-4-RP keeps re-checking output tags',
+          description: 'LOT finds that Phi-4-RP repeatedly pauses to ensure its predicted output is wrapped in [ANSWER] ... [/ANSWER] before submitting, even after it has already produced the final value.',
+          points: [
+            'The model allocates multiple steps to restate the formatting requirement before giving the answer.',
+            'This cautious habit is far rarer in AceReason, hinting that Phi-4-RP internalizes the regex-based reward used during training.',
+            'Ensuring parseable answers matters in code-understanding tasks where exact brackets decide whether credit is granted.'
+          ],
+          image: 'png_figures/case_study_bor_crux.png',
+          alt: 'Radar chart comparing Phi-4-RP and AceReason reasoning features on CRUXEVAL',
+          caption: 'Phi-4-RP invests more thought into enforcing the requested answer template on CRUXEVAL.'
+        },
+        {
+          label: 'Qwen3-32B \u00b7 GPQA',
+          title: 'Qwen models write textual molecular sketches',
+          description: 'Both Qwen3-8B and Qwen3-32B convert IUPAC names into structural formulas mid-reasoning so they can reason about bonds without visual tools.',
+          points: [
+            'LOT highlights a \"visualize molecular structure\" feature where models rewrite molecules as ASCII diagrams.',
+            'This step helps them keep track of valence constraints and ring closures before applying chemistry rules.',
+            'The behavior shows up even though the models only see text, underscoring how LOT surfaces multimodal-style reasoning.'
+          ],
+          image: 'png_figures/visualize-molecular-structure-reasoning.png',
+          alt: 'Examples of Qwen3 models spelling out structural formulas while solving GPQA chemistry questions',
+          caption: 'Qwen3 models invent textual sketches of molecules to reason about bonds and constraints.'
+        },
+      ];
+
+      let index = 0;
+      const labelEl = document.getElementById('pattern-label');
+      const titleEl = document.getElementById('pattern-title');
+      const descriptionEl = document.getElementById('pattern-description');
+      const pointsEl = document.getElementById('pattern-points');
+      const imageEl = document.getElementById('pattern-image');
+      const captionEl = document.getElementById('pattern-caption');
+      const dotsEl = document.getElementById('pattern-dots');
+
+      function renderDots() {
+        dotsEl.innerHTML = '';
+        slides.forEach((_, idx) => {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = idx === index ? 'pattern-dot pattern-dot--active' : 'pattern-dot';
+          dot.setAttribute('aria-label', 'View reasoning pattern ' + (idx + 1));
+          dot.addEventListener('click', () => {
+            index = idx;
+            render();
+          });
+          dotsEl.appendChild(dot);
+        });
+      }
+
+      function render() {
+        const slide = slides[index];
+        labelEl.textContent = slide.label;
+        titleEl.textContent = slide.title;
+        descriptionEl.textContent = slide.description;
+        pointsEl.innerHTML = slide.points.map((point) => '<li>' + point + '</li>').join('');
+        imageEl.src = slide.image;
+        imageEl.alt = slide.alt;
+        captionEl.textContent = slide.caption;
+        renderDots();
+      }
+
+      document.getElementById('pattern-prev').addEventListener('click', function () {
+        index = (index - 1 + slides.length) % slides.length;
+        render();
+      });
+
+      document.getElementById('pattern-next').addEventListener('click', function () {
+        index = (index + 1) % slides.length;
+        render();
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
