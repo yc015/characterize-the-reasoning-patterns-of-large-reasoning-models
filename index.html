@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Your thoughts tell who you are | Reasoning Patterns of LRMs</title>
+  <title>Their thoughts tell who they are | Characterize the Distinguishing Reasoning Patterns of LRMs</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet" />
@@ -13,8 +13,8 @@
   <header class="hero" id="top">
     <div class="hero__content container">
       <!-- <p class="hero__tag">Large Reasoning Models &bull; LOT</p> -->
-      <h1>Your thoughts tell who you are</h1>
-      <p class="hero__subtitle">Characterizing the reasoning patterns of large reasoning models by building an open, LLM-proposed taxonomy of how they think.</p>
+      <h1>Their thoughts tell who they are</h1>
+      <p class="hero__subtitle">Characterizing the distinguishing reasoning patterns of large reasoning models by building an open, LLM-proposed taxonomy of how they think.</p>
       <p class="authors">Yida Chen, Yuning Mao, Xianjun Yang, Suyu Ge, Shengjie Bi, Lijuan Liu, Saghar Hosseini, Liang Tan, Yixin Nie, Shaoliang Nie</p>
       <p class="affiliations">Harvard University &middot; Meta Superintelligence Labs</p>
       <div class="hero__cta">
@@ -27,9 +27,46 @@
   <main>
     <section class="section container" id="overview">
       <div class="section__header">
-        <h2>Why LOT?</h2>
+        <h2>Why characterize the reasoning patterns of artificial reasoners?</h2>
         <p>LOT (LLM-proposed Open Taxonomy) inductively discovers the reasoning traits that distinguish LRMs, annotates new traces with these traits, and trains a lightweight classifier to quantify how models think.</p>
       </div>
+      
+    </section>
+
+    <section class="section container" id="lot">
+      <div class="section__header">
+        <h2>LLM-proposed Open Taxonomy (LOT) for Reasonings of LRMs</h2>
+        <p>LOT is inspired by inductive coding in qualitative research: the taxonomy grows with the data instead of being fixed upfront.</p>
+      </div>
+      <div class="lot-carousel" aria-label="LOT pipeline illustration">
+        <div class="lot-carousel__slides" id="lot-slides">
+          <figure class="lot-slide">
+            <img src="png_figures/feature_generation.png" alt="LOT compares paired traces and proposes new reasoning features" />
+            <figcaption>LLM proposes distinguishing reasoning traits (e.g., premature hypothesis switches) by comparing two models on the same problem.</figcaption>
+          </figure>
+          <figure class="lot-slide">
+            <img src="png_figures/feature_anotation.png" alt="LOT annotates reasoning traces with the proposed features" />
+            <figcaption>These traits become annotation prompts so reasoning traces can be converted into PoR/BoR vectors.</figcaption>
+          </figure>
+          <figure class="lot-slide">
+            <img src="png_figures/feature_update.png" alt="LOT retrains classifiers and expands the taxonomy when misclassifications occur" />
+            <figcaption>A lightweight classifier trains on the encoded traces; misclassified samples trigger another round of feature proposals.</figcaption>
+          </figure>
+          <figure class="lot-slide">
+            <img src="png_figures/annotate_updated_feature.png" alt="LOT keeps adding features and refreshing annotations" />
+            <figcaption>Newly proposed features are annotated across the corpus to keep the taxonomy open and up to date.</figcaption>
+          </figure>
+        </div>
+        <div class="lot-carousel__controls">
+          <button class="lot-btn" type="button" id="lot-prev" aria-label="Previous LOT step">&larr;</button>
+          <div class="lot-dots" id="lot-dots"></div>
+          <button class="lot-btn" type="button" id="lot-next" aria-label="Next LOT step">&rarr;</button>
+        </div>
+      </div>
+      <!-- <div class="definitions"> -->
+        <!-- <h4>PoR vs. BoR encodings</h4>
+        <p><strong>PoR</strong> tracks whether a behavior appears at all in a trace. <strong>BoR</strong> retains frequency information via KNN-imputed counts, which is vital for long GPQA and AIME solutions.</p>
+      </div> -->
       <div class="stats-grid">
         <article class="stat-card">
           <h3>12 LRMs x 5 datasets</h3>
@@ -50,38 +87,9 @@
       </div>
     </section>
 
-    <section class="section container" id="lot">
-      <div class="section__header">
-        <h2>LOT in a nutshell</h2>
-        <p>LOT is inspired by inductive coding in qualitative research: the taxonomy grows with the data instead of being fixed upfront.</p>
-      </div>
-      <div class="method-grid">
-        <article>
-          <h3>1. Propose distinguishing traits</h3>
-          <p>Llama3.3-70B compares paired traces from two LRMs solving the same problem and verbalizes reasoning differences such as <em>premature hypothesis switching</em> or <em>simulated execution of code</em>.</p>
-        </article>
-        <article>
-          <h3>2. Annotate and encode</h3>
-          <p>The same LLM tags new traces with the proposed traits. We create two encodings: PoR (pattern-of-reasoning, binary) and BoR (bag-of-reasoning, frequency-aware).</p>
-        </article>
-        <article>
-          <h3>3. Train &amp; expand</h3>
-          <p>A logistic classifier predicts the source model. When it misclassifies a trace, LOT asks the LLM to expand the taxonomy with new features and retries, keeping the feature set open.</p>
-        </article>
-        <article>
-          <h3>4. Inspectable taxonomy</h3>
-          <p>The resulting feature list acts as a readable report of how two LRMs differ. These features can be aggregated, visualized, and used to guide reasoning interventions.</p>
-        </article>
-      </div>
-      <div class="definitions">
-        <h4>PoR vs. BoR encodings</h4>
-        <p><strong>PoR</strong> tracks whether a behavior appears at all in a trace. <strong>BoR</strong> retains frequency information via KNN-imputed counts, which is vital for long GPQA and AIME solutions.</p>
-      </div>
-    </section>
-
     <section class="section container" id="insights">
       <div class="section__header">
-        <h2>What LOT reveals</h2>
+        <h2>What LOT reveals in the “thoughts" of LRMs</h2>
         <p>Three axes&mdash;model scale, base family, and domain specialization&mdash;lead to distinct reasoning signatures.</p>
       </div>
 
@@ -202,7 +210,7 @@
 
     <section class="section container" id="instruction-following">
       <div class="section__header">
-        <h2>Instruction following inside the reasoning trace is brittle</h2>
+        <h2>Reasoning model cannot follow user instructions</h2>
         <p>Appendix C tests whether LRMs can add a simple sentence (&ldquo;I am a large language model.&rdquo;) at the start of their thinking. Almost all models fail.</p>
       </div>
       <div>
@@ -265,6 +273,59 @@
   </footer>
   <script>
     (function () {
+      const lotSlides = Array.from(document.querySelectorAll('.lot-slide'));
+      const lotDots = document.getElementById('lot-dots');
+      const lotPrev = document.getElementById('lot-prev');
+      const lotNext = document.getElementById('lot-next');
+      let lotIndex = 0;
+      let lotInterval;
+
+      function renderLotDots() {
+        lotDots.innerHTML = '';
+        lotSlides.forEach((_, idx) => {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = idx === lotIndex ? 'lot-dot lot-dot--active' : 'lot-dot';
+          dot.setAttribute('aria-label', 'View LOT step ' + (idx + 1));
+          dot.addEventListener('click', () => {
+            lotIndex = idx;
+            updateLotSlide();
+            resetLotInterval();
+          });
+          lotDots.appendChild(dot);
+        });
+      }
+
+      function updateLotSlide() {
+        lotSlides.forEach((slide, idx) => {
+          slide.classList.toggle('lot-slide--active', idx === lotIndex);
+        });
+        renderLotDots();
+      }
+
+      function nextLotSlide(step = 1) {
+        lotIndex = (lotIndex + step + lotSlides.length) % lotSlides.length;
+        updateLotSlide();
+      }
+
+      function resetLotInterval() {
+        if (lotInterval) clearInterval(lotInterval);
+        lotInterval = setInterval(() => nextLotSlide(1), 4500);
+      }
+
+      lotPrev.addEventListener('click', () => {
+        nextLotSlide(-1);
+        resetLotInterval();
+      });
+
+      lotNext.addEventListener('click', () => {
+        nextLotSlide(1);
+        resetLotInterval();
+      });
+
+      updateLotSlide();
+      resetLotInterval();
+
       const slides = [
         {
           label: 'Seed-Coder-8B \u00b7 MATH-500',
