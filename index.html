@@ -116,7 +116,7 @@
             </article>
           </div>
 
-          <div class="split-grid">
+          <!-- <div class="split-grid">
             <div>
               <h3>Main Takeaways</h3>
               <ul class="insight__points">
@@ -129,7 +129,7 @@
               <h4>Qualitative Analysis with LLM-generated Taxonomy</h4>
               <p>Because LOT’s features are in natural language and it generates reasoning-trace annotations during classification, we can directly use these annotations and the taxonomy to literally interpret the reasoning differences between LRMs.</p> <p>Some interesting findings include larger Qwen3 models' attempts to "visualize" the molecular structure of compounds when solving chemistry problems, and the Phi-4 model's repeated checking of the output format.</p>
             </div>
-          </div>
+          </div> -->
         </div>
       </section>
 
@@ -169,7 +169,7 @@
           <div class="split-grid">
             <div class="highlight-card">
               <h4>Vector Encodings of Reasoning Traces</h4>
-              <p>To classify the source model of an unseen reasoning trace, LOT needs to convert the trace into a vector representing the observed reasoning features. We experimented with two vector encodings: a <strong>PoR</strong> vector, a binary vector where each dimension is 1 if the corresponding feature appears in the trace and 0 otherwise; and a <strong>BoR</strong> vector ∈ ℝᵈ, where each dimension records the frequency of the feature within the trace.</p>
+              <p>To classify an unseen reasoning trace, LOT needs to convert it into a vector representing the observed reasoning features. We tested two vector encodings: <strong>Presence of Reasoning (PoR)</strong> encoding, a binary vector where each dimension is 1 if the corresponding feature appears in the trace and 0 otherwise; and <strong>Bag of Reasoning (BoR)</strong> encoding, a vector ∈ ℝᵈ, where each dimension records the frequency of the feature within the trace.</p>
             </div>
             <div class="highlight-card">
               <h4>Choice of Classifier</h4>
@@ -191,11 +191,11 @@
             <div>
               <p class="eyebrow">Reasoning differences among different "brains" size</p>
               <h3>Larger "brains" reasoning more effectively</h3>
-              <p>We applied LOT to classify the reasoning traces of Qwen3-32B and its smaller variants (0.6B, 4B, 8B, 14B). We found that the distinguishability of their thoughts decreases as the gap between parameter scales narrows. This is observed across all datasets.</p>
+              <p>We applied LOT to classify the reasoning traces of Qwen3-32B and its smaller variants (0.6B, 4B, 8B, 14B).</p>
               <ul class="insight__points">
-                <li>Models with larger parameter gap are more distinguishable; incorporating feature frequencies (BoR encoding) further improves the classification accuracy</li>
+                <li>Models with larger parameter gap are more distinguishable; considering frequencies of reasoning features (BoR encoding) further improves the classification accuracy</li>
                 <li>Similar trends hold across other baseline classification methods (few-shot prompting, verbalized machine learning, and BoR / PoR encodings of human-defined taxonomy), but LOT with BoR encoding achieves the highest accuracy</li>
-                <li>LOT's learned taxonomy highlights clear behavioral differences: larger Qwen3 models read problem statements more carefully, check their chosen approaches against constraints, and retrieve relevant knowledge, while smaller models often re-examine the same information, apply incorrect theories, or fall into circular reasoning.</li>
+                <li>LOT's learned taxonomy highlights interesting behavioral differences: larger Qwen3 models read problem statements more carefully, check their chosen approaches against constraints, and retrieve relevant knowledge, while smaller models often re-examine the same information, apply incorrect theories, or fall into circular reasoning.</li>
               </ul>
             </div>
             <div style="display: flex; flex-direction: column; align-items: center;">
@@ -214,7 +214,7 @@
             <div>
               <p class="eyebrow">Fingerprints from base models</p>
               <h3>Models reasoning similarly if fine-tuned from the same base model</h3>
-              <p>Models that share a base (e.g., QwQ and DeepSeek-Distill-Qwen are derived from Qwen2.5) are harder to distinguish, while cross-family pairs show sharper contrasts in verification rituals and problem decomposition.</p>
+              <p>Models fine-tuned from the same base model are harder to distinguish, while models use different base models show unique reasoning behaviors.</p>
               <ul class="insight__points">
                 <li>On simpler datasets with shorter reasoning traces, both PoR and BoR encodings of LOT can achieve high accuracy in classifying the reasoning traces from models fine-tuned from different base models (such as Qwen3-14B versus Magistral-Small).</li>
                 <li>On more complex datasets with longer reasoning traces, the accuracy of PoR drops significantly, while BoR still maintains high accuracy. This suggests that the models may employ similar set of reasoning strategies on harder problems, but differ in how frequently they employ them.</li>
@@ -231,10 +231,12 @@
               <p class="eyebrow">Domain inertia</p>
               <h3>Reasoning model fine-tuned on coding tasks implements functions to solve math problems</h3>
               <p>Seed-Coder-8B-Reasoning is pretrained on a mixture of math and coding data but its reasoning is fine-tuned solely on coding-related datasets. When generalize it to solve math problems, it implements and simulates Python function to tackle 20% of MATH-500 problems.</p>
+              <p>While LOT also detects “Code-based Problem Solving” in 2% of Qwen3-8B’s traces, those cases involve Asymptote code (a language for describing diagrams) in the problem statement. Qwen3-8B parses the code to interpret the diagram but does not engage in additional coding-related steps.</p>
+              <p>Scroll to next section to see the example reasoning traces that exhibit this feature.</p>
               <ul class="insight__points">
-                <li>In 20% of Seed-Coder's reasoning on MATH-500, it identifies the algorithm needed for solving the problem, writes pseudocode, and implement it in Python to solve the problems.</li>
+                <!-- <li>In 20% of Seed-Coder's reasoning on MATH-500, it identifies the algorithm needed for solving the problem, writes pseudocode, and implement it in Python to solve the problems.</li>
                 <li>While LOT also detects “Code-based Problem Solving” in 2% of Qwen3-8B’s traces, those cases involve Asymptote code (a language for describing diagrams) in the problem statement. Qwen3-8B parses the code to interpret the diagram but does not engage in additional coding-related steps.</li>
-                <li>Scroll to next section to see the example reasoning traces that exhibit this feature.</li>
+                <li>Scroll to next section to see the example reasoning traces that exhibit this feature.</li> -->
               </ul>
             </div>
             <figure>
