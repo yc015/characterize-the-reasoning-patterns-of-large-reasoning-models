@@ -36,7 +36,7 @@
         <div class="hero-copy">
           <p class="eyebrow">Their thoughts tell who they are</p>
           <h1>Characterizing the reasoning patterns of Large Reasoning Models using LLM-proposed Open Taxonomy</h1>
-          <p class="lead">Different LRMs perform differently on the same task, but are there also systematic differences in their reasoning patterns? Can their distinguishing reasoning habits explain their performance gaps?</p>
+          <p class="lead">Different large reasoning models achieve different accuracies on the same task, but do they also reason differently? Can their distinguishing reasoning habits explain their performance gaps?</p>
           <p class="authors" style="font-weight: 600;">
             <a href="https://yc015.github.io/">Yida Chen</a>², Yuning Mao¹, Xianjun Yang¹, Suyu Ge¹, Shengjie Bi¹, Lijuan Liu¹, Saghar Hosseini¹, Liang Tan¹, Yixin Nie¹, Shaoliang Nie¹
           </p>
@@ -70,7 +70,7 @@
             <p class="caption">LOT builds a taxonomy by (1) using LLM to propose differentiating features from local observations, and (2) validating the quality of the proposed features by their accuracy in classifying unseen data.</p>
           </div>
           <div class="hero-card hero-card--stacked">
-            <p class="eyebrow">Highlight</p>
+            <p class="eyebrow">Highlights</p>
             <ul>
               <li>Designed an algorithm, LLM-proposed Open Taxonomy (LOT), that automatically identifies the distinguishing features of texts from different source and expressed them in natural language</li>
               <li>Applied LOT to identify systematic differences in the generated reasoning traces of 12 open-source LRMs on 5 datasets</li>
@@ -88,7 +88,7 @@
           <div class="section__header">
             <p class="eyebrow">Motivation</p>
             <h2>Why identify reasoning differences among LRMs?</h2>
-            <p>Recent works show that the performance difference between LRMs are connected to their reasoning habits [1] and the structure of their thought processes [2]. Nonetheless, these works analyze the reasoning patterns of individual LRMs using a taxonomy of reasoning behaviors defined by researchers prior to the analysis. This <strong>deductive</strong> approach may overlook the subtle differences in reasoning patterns that are not captured by the researchers' intuition.</p>
+            <p>Recent works show that the performance difference between LRMs are connected to their reasoning habits <a href="https://arxiv.org/pdf/2503.01307"  target="_blank" rel="noreferrer noopener">[1]</a> and the structure of their thought processes <a href="https://arxiv.org/pdf/2505.22148" target="_blank" rel="noreferrer noopener">[2]</a>. Nonetheless, these works analyze the reasoning patterns of individual LRMs using a taxonomy of reasoning behaviors defined by researchers prior to the analysis. This <strong>deductive</strong> approach may overlook the subtle differences in reasoning patterns that are not captured by the researchers' intuition.</p>
             <p>We propose LLM-proposed Open Taxonomy (LOT), an automatic prompt engineer (APE) algorithm that simulates the workflow of <strong>inductive coding</strong> in qualitative research to create a taxonomy of reasoning patterns that set different LRMs apart. Compared to existing APE methods, LOT is designed for long-text classification, as it decouples the generation of classification prompts into separate forward passes. This enables LOT to capture the sysmatic differences (global) among long texts with observations of limited examples (local) in a single forward pass.</p>
           </div>
 
