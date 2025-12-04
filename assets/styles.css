@@ -1,19 +1,49 @@
 ﻿:root {
-  --bg: #05060f;
-  --surface: rgba(11, 13, 31, 0.92);
-  --surface-alt: rgba(15, 18, 40, 0.85);
-  --card: rgba(19, 21, 52, 0.95);
-  --border: rgba(255, 255, 255, 0.08);
-  --text: #f8f8ff;
-  --muted: #b5b9d6;
-  --accent: #8f7bff;
-  --accent-strong: #6e5dff;
-  --accent-soft: rgba(143, 123, 255, 0.18);
-  --shadow: 0 35px 80px rgba(3, 4, 12, 0.55);
+  --bg: #fff7fb;
+  --surface: rgba(255, 255, 255, 0.94);
+  --surface-alt: rgba(255, 255, 255, 0.92);
+  --card: rgba(255, 255, 255, 0.9);
+  --border: rgba(148, 114, 199, 0.25);
+  --text: #2a0e3f;
+  --muted: #5d436f;
+  --accent: #b04bff;
+  --accent-strong: #301CA0;
+  --accent-soft: rgba(176, 75, 255, 0.12);
+  --shadow: 0 25px 65px rgba(93, 67, 111, 0.2);
 }
 
 *, *::before, *::after {
   box-sizing: border-box;
+}
+
+.solid {
+  padding: 1px 2px;
+  border: 2px solid #000;
+  background: #fff;
+}
+.hatched {
+  padding: 1px 2px;
+  border: 2px solid #000;
+  background: repeating-linear-gradient(
+      315deg,
+      #fff,
+      #fff 4px,
+      #7594e993 5px,
+      #7594e993 6px
+  );
+  color: #000;
+}
+.dashed-hatched {
+  padding: 1px 2px;
+  border: 2px dashed #000;
+  background: repeating-linear-gradient(
+      90deg,
+      #fff,
+      #fff 4px,
+      #7594e993 5px,
+      #7594e993 6px
+  );
+  color: #000;
 }
 
 body {
@@ -21,7 +51,7 @@ body {
   min-height: 100vh;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--text);
-  background: radial-gradient(120% 120% at 0% 0%, #191c49 0%, #05060f 55%, #05060f 100%);
+  background: radial-gradient(140% 120% at 10% 0%, #ffe6f0 0%, #fdf4ff 40%, #f6f3ff 100%);
   line-height: 1.65;
 }
 
@@ -29,9 +59,9 @@ img {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 1.3rem;
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.02);
+  /* border-radius: 1.3rem; */
+  /* border: 1px solid var(--border); */
+  background: rgba(255, 255, 255, 0.6);
 }
 
 a {
@@ -84,9 +114,9 @@ button {
 }
 
 .site-hero {
-  padding: 2rem 0 4rem;
-  background: radial-gradient(140% 120% at 15% 10%, rgba(143, 123, 255, 0.35), transparent),
-    linear-gradient(145deg, rgba(15, 16, 42, 0.95), rgba(6, 7, 21, 0.98));
+  padding: 2.5rem 0 4rem;
+  background: radial-gradient(160% 140% at 20% 0%, rgba(255, 211, 238, 0.9), transparent 60%),
+    linear-gradient(270deg, rgba(255, 255, 255, 0.95), rgba(253, 244, 255, 0.8));
   border-bottom: 1px solid var(--border);
 }
 
@@ -103,7 +133,7 @@ button {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text);
+  color: var(--accent-strong);
 }
 
 .nav-links {
@@ -113,11 +143,11 @@ button {
 
 .nav-links a {
   color: var(--muted);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .nav-links a:hover {
-  color: var(--text);
+  color: var(--accent-strong);
 }
 
 .nav-actions {
@@ -130,7 +160,7 @@ button {
   display: none;
   flex-direction: column;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.7);
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 0.4rem 0.75rem;
@@ -157,9 +187,41 @@ button {
   flex-direction: column;
 }
 
-.authors,
-.affiliations {
+.authors {
   color: var(--muted);
+}
+
+.affiliations-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: center;
+}
+
+.affiliations-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0rem;
+  /* border: 1px solid var(--border); */
+  /* border-radius: 999px; */
+  /* background: rgba(255, 255, 255, 0.9); */
+  color: var(--accent-strong);
+  font-weight: 600;
+  /* box-shadow: 0 8px 20px rgba(118, 75, 135, 0.15); */
+}
+
+.affiliation-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid rgba(122, 58, 173, 0.2);
+  padding: 3px;
 }
 
 .hero-card {
@@ -168,6 +230,7 @@ button {
   border-radius: 1.5rem;
   padding: 1.5rem;
   box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
 }
 
 .hero-card ul {
@@ -181,6 +244,7 @@ button {
 .hero-copy .lead {
   font-size: 1.1rem;
   max-width: 640px;
+  color: #4b315f;
 }
 
 .hero-cta {
@@ -200,16 +264,16 @@ button {
   padding: 0.35rem 0.9rem;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.7);
   font-size: 0.85rem;
-  color: var(--muted);
+  color: var(--accent-strong);
 }
 
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(122, 71, 138, 0.8);
   margin-bottom: 0.5rem;
 }
 
@@ -234,21 +298,23 @@ button {
 }
 
 .btn {
-  background: linear-gradient(120deg, #8f7bff, #58c4ff);
-  color: #05060f;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  /* background: linear-gradient(120deg, #5db4c2, #a855f7); */
+  background: linear-gradient(120deg, #f472b6, #a855f7);
+  color: #fff;
+  box-shadow: 3px 5px 11px 0PX rgba(244, 114, 182, 0.35);
 }
 
 .btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-5px);
+  transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
   text-decoration: none;
 }
 
 .btn--ghost,
 .pill {
   background: transparent;
-  border-color: var(--border);
-  color: var(--text);
+  border-color: #9a60cd;
+  color: var(--accent-strong);
 }
 
 .pill--ghost {
@@ -261,13 +327,13 @@ button {
 }
 
 .section--alt {
-  background: rgba(255, 255, 255, 0.015);
+  background: rgba(255, 255, 255, 0.7);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
 
 .section--raised {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.85);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -319,6 +385,7 @@ button {
   border: 1px solid var(--border);
   padding: 1.5rem;
   box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
 }
 
 .timeline {
@@ -337,7 +404,7 @@ button {
 .timeline__btn {
   border: 1px solid var(--border);
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.8);
   color: var(--muted);
   text-align: left;
   padding: 1rem 1.2rem;
@@ -349,7 +416,8 @@ button {
 .timeline__btn.is-active {
   border-color: var(--accent);
   color: var(--text);
-  background: var(--accent-soft);
+  background: rgba(244, 114, 182, 0.15);
+  box-shadow: 3px 5px 11px 0PX rgba(241, 180, 212, 0.35);
 }
 
 .timeline__panel {
@@ -358,6 +426,7 @@ button {
   background: var(--surface);
   padding: 1.75rem;
   box-shadow: var(--shadow);
+  backdrop-filter: blur(4px);
 }
 
 .timeline__media {
@@ -374,6 +443,7 @@ button {
   background: var(--surface);
   box-shadow: var(--shadow);
   margin-bottom: 2rem;
+  backdrop-filter: blur(6px);
 }
 
 .case-grid {
@@ -390,13 +460,14 @@ button {
   padding: 2rem;
   background: var(--surface);
   box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
 }
 
 .case-media {
   border-radius: 1.25rem;
   border: 1px dashed var(--border);
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.65);
   margin-bottom: 0.75rem;
 }
 
@@ -436,13 +507,14 @@ button {
   padding: 1.5rem;
   background: var(--surface);
   box-shadow: var(--shadow);
+  backdrop-filter: blur(4px);
 }
 
 .callout {
   border: 1px solid var(--border);
   border-radius: 1.5rem;
   padding: 2rem;
-  background: rgba(143, 123, 255, 0.08);
+  background: rgba(255, 203, 235, 0.4);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
@@ -461,6 +533,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  backdrop-filter: blur(4px);
 }
 
 .resource-card a {
@@ -468,17 +541,17 @@ button {
 }
 
 .citation pre {
-  background: #0b0d1f;
-  color: #d4d8ff;
+  background: #f6edff;
+  color: #3d1d59;
   padding: 1.25rem;
   border-radius: 1.25rem;
-  border: 1px solid #1b1f3f;
+  border: 1px solid rgba(122, 58, 173, 0.2);
   overflow-x: auto;
 }
 
 footer {
   padding: 2rem 0;
-  background: #05060f;
+  background: #fef1fb;
   border-top: 1px solid var(--border);
 }
 
@@ -498,7 +571,7 @@ footer {
     flex-direction: column;
     padding: 1rem 1.5rem;
     border-radius: 1rem;
-    background: var(--surface);
+    background: rgba(255, 255, 255, 0.95);
     border: 1px solid var(--border);
     box-shadow: var(--shadow);
     display: none;

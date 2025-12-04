@@ -8,22 +8,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="assets/favicon/favicon_lot.png" />
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
   <div class="page" id="top">
     <header class="site-hero">
       <div class="site-nav container">
-        <a class="logo" href="#top">LOT 脳 LRMs</a>
+        <a class="logo" href="#top">LLM-proposed Open Taxonomy</a>
         <nav class="nav-links" id="site-nav-links">
           <a href="#overview">Overview</a>
           <a href="#method">Method</a>
           <a href="#findings">Findings</a>
           <a href="#interventions">Interventions</a>
-          <a href="#resources">Resources</a>
+          <a href="#resources">Code & Data</a>
         </nav>
         <div class="nav-actions">
-          <a class="pill" href="https://arxiv.org/pdf/2509.24147" target="_blank" rel="noreferrer noopener">Read the PDF</a>
+          <a class="pill" href="https://arxiv.org/pdf/2509.24147" target="_blank" rel="noreferrer noopener">Read the Paper</a>
           <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
             <span></span>
             <span></span>
@@ -33,38 +34,48 @@
 
       <div class="hero-grid container">
         <div class="hero-copy">
-          <p class="eyebrow">Large Reasoning Models 路 LLM-proposed Open Taxonomy</p>
-          <h1>Characterizing the reasoning patterns of LRMs</h1>
-          <p class="lead">LOT starts from paired reasoning traces, proposes human-readable features, and trains lightweight classifiers that reveal how 12 open LRMs think across GPQA, MATH-500, AIME, CRUXEVAL, and LiveCodeBench.</p>
-          <p class="authors">
-            Yida Chen, Yuning Mao, Xianjun Yang, Suyu Ge, Shengjie Bi, Lijuan Liu, Saghar Hosseini, Liang Tan, Yixin Nie, Shaoliang Nie
+          <p class="eyebrow">Their thoughts tell who they are</p>
+          <h1>Characterizing the reasoning patterns of Large Reasoning Models using LLM-proposed Open Taxonomy</h1>
+          <p class="lead">Different LRMs perform differently on the same task, but are there also systematic differences in their reasoning patterns? Can their distinguishing reasoning habits explain their performance gaps?</p>
+          <p class="authors" style="font-weight: 600;">
+            <a href="https://yc015.github.io/">Yida Chen</a>², Yuning Mao¹, Xianjun Yang¹, Suyu Ge¹, Shengjie Bi¹, Lijuan Liu¹, Saghar Hosseini¹, Liang Tan¹, Yixin Nie¹, Shaoliang Nie¹
           </p>
-          <p class="affiliations">Harvard University 路 Meta Superintelligence Labs</p>
+          <ul class="affiliations-list" role="list">
+            <li>
+              <img src="png_figures/meta.png" alt="Meta Superintelligence Labs logo" class="affiliation-icon" />
+              <span>Meta Superintelligence Labs¹</span>
+            </li>
+            <li>
+              <img src="png_figures/Harvard_University_shield.png" alt="Harvard University shield" class="affiliation-icon" />
+              <span>Harvard University²</span>
+            </li>
+          </ul>
+          
           <div class="hero-cta">
-            <a class="btn" href="https://arxiv.org/pdf/2509.24147" target="_blank" rel="noreferrer noopener">Paper (arXiv)</a>
+            <a class="btn" href="https://arxiv.org/pdf/2509.24147" target="_blank" rel="noreferrer noopener">Preprint</a>
             <a class="btn btn--ghost" href="#findings">See the findings</a>
           </div>
           <div class="hero-tags">
-            <span class="tag">12 LRMs</span>
-            <span class="tag">24,444 reasoning traces</span>
-            <span class="tag">Inductive taxonomy</span>
-            <span class="tag">+3.3鈥?.7% GPQA</span>
+            <span class="tag">LLM-proposed Open Taxonomy</span>
+            <span class="tag">Automatic Prompt Engineer for Interpretable Text Classification</span>
+            <span class="tag">Large Reasoning Models</span>
+            <span class="tag">Model Behavior Analysis</span>
           </div>
         </div>
 
         <div class="hero-media">
           <div class="hero-card">
-            <p class="eyebrow">LOT in motion</p>
-            <img src="png_figures/lot_algorithm.gif" alt="Animated overview of LOT's inductive feature discovery loop" />
-            <p class="caption">An annotator LLM alternates between proposing differentiating features and expanding the taxonomy whenever classification fails.</p>
+            <p class="eyebrow">Our Method (LLM-proposed Open Taxonomy)</p>
+            <img src="png_figures/lot_algorithm.gif" alt="Animated overview of LOT's inductive feature discovery loop" style="border: none;"/>
+            <p class="caption">LOT builds a taxonomy by (1) using LLM to propose differentiating features from local observations, and (2) validating the quality of the proposed features by their accuracy in classifying unseen data.</p>
           </div>
           <div class="hero-card hero-card--stacked">
-            <p class="eyebrow">Evaluation stack</p>
+            <p class="eyebrow">Highlight</p>
             <ul>
-              <li>5 datasets spanning graduate science, olympiad math, and code understanding</li>
-              <li>Presence-of-reasoning (PoR) and Bag-of-reasoning (BoR) encodings</li>
-              <li>80鈥?00% classification accuracy when LRMs differ in scale, base family, or specialization</li>
-              <li>Test-time interventions that edit reasoning summaries, not network weights</li>
+              <li>Designed an algorithm, LLM-proposed Open Taxonomy (LOT), that automatically identifies the distinguishing features of texts from different source and expressed them in natural language</li>
+              <li>Applied LOT to identify systematic differences in the generated reasoning traces of 12 open-source LRMs on 5 datasets</li>
+              <li>LOT achieves 80-100% accuracy in classifying the reasoning traces, outperforming few-shot prompt, human-defined taxonomy, and a prior interpretable classification method by up to 23.8%</li>
+              <li>The identified reasoning differences can explain the performance gaps of LRMs on the tasks</li>
             </ul>
           </div>
         </div>
@@ -75,43 +86,48 @@
       <section id="overview" class="section section--raised">
         <div class="container">
           <div class="section__header">
-            <p class="eyebrow">At a glance</p>
-            <h2>Why analyze reasoning signatures?</h2>
-            <p>Benchmark accuracy alone hides how LRMs reason. LOT lets us read models鈥?thoughts in their own words, quantify systematic habits, and connect those habits to performance gaps.</p>
+            <p class="eyebrow">Motivation</p>
+            <h2>Why identify reasoning differences among LRMs?</h2>
+            <p>Recent works show that the performance difference between LRMs are connected to their reasoning habits [1] and the structure of their thought processes [2]. Nonetheless, these works analyze the reasoning patterns of individual LRMs using a taxonomy of reasoning behaviors defined by researchers prior to the analysis. This <strong>deductive</strong> approach may overlook the subtle differences in reasoning patterns that are not captured by the researchers' intuition.</p>
+            <p>We propose LLM-proposed Open Taxonomy (LOT), an automatic prompt engineer (APE) algorithm that simulates the workflow of <strong>inductive coding</strong> in qualitative research to create a taxonomy of reasoning patterns that set different LRMs apart. Compared to existing APE methods, LOT is designed for long-text classification, as it decouples the generation of classification prompts into separate forward passes. This enables LOT to capture the sysmatic differences (global) among long texts with observations of limited examples (local) in a single forward pass.</p>
           </div>
 
+          <p class="eyebrow">Summary of our contributions</p>
           <div class="metrics-grid">
             <article class="metric-card">
-              <h3>12 脳 LRMs</h3>
-              <p>Qwen3 (0.6B鈥?2B), DeepSeek-R1 Distill, AceReason, Phi-4-RP, Magistral, Seed-Coder.</p>
+              <h3>Addressing the limitations of existing APE methods on long text classification</h3>
+              <p>Existing APE methods generate the classification instruction either by selecting from predefined candidates (non-inductive) or by requiring LLMs to extract patterns from a large data batch in one forward pass, impractical for classifying long-text (such as reasoning traces).</p> 
+              <p>LOT overcomes these limitations by decoupling the generation of the classification "model" into <strong>feature proposal</strong> stage and <strong>parameter tuning</strong> stage, performed in separate forward passes.</p>
             </article>
             <article class="metric-card">
-              <h3>24,444 traces</h3>
+              <h3>Comprehensive evaluation on 12 LRMs over 5 datasets</h3>
+              <p>We applied LOT to classify the reasoning traces of 12 LRMs including Qwen3, QwQ, DeepSeek-R1 Distills, AceReason-Nemotron, Phi-4-Reasoning-Plus, Magistral-Small, and Seed-Coder-8B-Reasoning on 5 datasets including GPQA-Diamond, MATH-500, AIME, CRUXEVAL, and LiveCodeBench.</p>
+              <p>LOT achieves 80-100% accuracy in classifying the reasoning traces, outperforming few-shot prompt, human-defined taxonomy, and verbalized machine learning (APE-like) method by up to 23.8%</p>
+            </article>
+            <!-- <article class="metric-card">
+              <h3>Outperform existing APE method and human-defined taxonomy</h3>
               <p>Sampled with the authors鈥?official decoding settings to avoid prompt or temperature confounds.</p>
-            </article>
+            </article> -->
+            
             <article class="metric-card">
-              <h3>Open taxonomy</h3>
-              <p>Features grow with the data鈥攏o predefined tag sets, no brittle prompt-engineered rules.</p>
-            </article>
-            <article class="metric-card">
-              <h3>Interventions</h3>
-              <p>Editing summaries along LOT axes yields +3.3鈥?.7% GPQA for smaller Qwen3 models.</p>
+              <h3>Reasoning features identified by LOT has causal impact on performance</h3>
+              <p>As a case study, we analyze the correlation between the occurrence of reasoning features identified by LOT and the performance of the Qwen3 models on the GPQA dataset. We notice that the reasoning traits of the smaller Qwen3 models are more frequently associated with incorrect reasoning than the habits of the larger Qwen3-32B.</p>
+              <p>Editing the reasoning traces of smaller Qwen3 models to align with the habits of Qwen3-32B yields +3.3-5.7% accuracy gain on GPQA for smaller Qwen3 models.</p>
             </article>
           </div>
 
           <div class="split-grid">
             <div>
-              <h3>Paper highlights</h3>
+              <h3>Main Takeaways</h3>
               <ul class="insight__points">
-                <li>LOT inductively proposes reasoning features that remain human-readable.</li>
-                <li>PoR/BoR encodings outperform few-shot prompting, VML, and fixed taxonomies by up to 23.8%.</li>
-                <li>Reasoning differences surface along model scale, base family, and task specialization.</li>
-                <li>Behavior-level odds ratios translate into actionable edits that boost accuracy.</li>
+                <li>LRMs fine-tuned from different bases models exhibit more different reasoning patterns than the models fine-tuned from the same base.</li>
+                <li>LRMs with large gap in parameter scale also reason differently on the same task: larger reasoning models know to adjust their problem-solving approach and can stick to a consistent strategy throughout the reasoning while the smaller models often jump between concepts.</li>
+                <li>For LRMs trained on a specific task domain, such as coding, they may borrow the techniques from the training domain to reason about problems outside its fine-tuning domain, such as math.</li>
               </ul>
             </div>
             <div class="highlight-card">
-              <h4>From question to explanation</h4>
-              <p>Each reasoning difference is anchored in natural language. Analysts can reference the exact trace spans where a feature fires, making LOT suitable for qualitative write-ups and dataset curation.</p>
+              <h4>Qualitative Analysis with LLM-generated Taxonomy</h4>
+              <p>Because LOT’s features are in natural language and it generates reasoning-trace annotations during classification, we can directly use these annotations and the taxonomy to literally interpret the reasoning differences between LRMs.</p> <p>Some interesting findings include larger Qwen3 models' attempts to "visualize" the molecular structure of compounds when solving chemistry problems, and the Phi-4 model's repeated checking of the output format.</p>
             </div>
           </div>
         </div>
@@ -121,36 +137,43 @@
         <div class="container">
           <div class="section__header">
             <p class="eyebrow">How LOT works</p>
-            <h2>Inductive taxonomy construction for long-form thoughts</h2>
-            <p>LOT borrows from qualitative research: compare two traces, name the distinguishing behaviors, annotate new data, and expand the taxonomy whenever classification fails.</p>
+            <h2>Inductively construct a taxonomy of LLM's distinct reasoning habits</h2>
+            <p>LOT is inspired by the inductive coding process in qualitative research. The LLM first compares two reasoning traces from different LRMs and identifies their distinguishing reasoning features (<strong>a local observation</strong>). It then annotates these proposed features across a larger set of reasoning traces from the two LRMs and fits a linear statistical model using the annotations and their source-model labels (<strong>calibrating the local observation with more data processed in separate forward passes</strong>). The algorithm tests the taxonomy and model on classifying new traces. If the model fails, it branches to expand the taxonomy and repeats the process until no misclassifications occur or no new reasoning differences are identified (<strong>evolving the open taxonomy</strong>).</p>
+
           </div>
 
           <div class="timeline">
-            <div class="timeline__steps">
-              <button class="timeline__btn" data-lot-step="0">Compare paired reasonings</button>
-              <button class="timeline__btn" data-lot-step="1">Annotate features across traces</button>
-              <button class="timeline__btn" data-lot-step="2">Train & diagnose misclassifications</button>
-              <button class="timeline__btn" data-lot-step="3">Expand the taxonomy</button>
+            <div style="display: flex; flex-direction: row; align-items: flex-start;">
+              <img src="png_figures/point_back_arrow.png" alt="next step" style="width: 50px; object-fit: contain; align-self: flex-start; padding-top: 280px;"/>
+              <div class="timeline__steps">
+                <button class="timeline__btn" data-lot-step="0">Compare reasoning traces and propose features</button>
+                <img src="png_figures/point_down.png" alt="next step" style="width: 40px; height: 40px; object-fit: contain; align-self: center;"/>
+                <button class="timeline__btn" data-lot-step="1">Annotate features on more traces; fit a classifier on annotations</button>
+                <img src="png_figures/point_down.png" alt="next step" style="width: 40px; height: 40px; object-fit: contain; align-self: center;"/>
+                <button class="timeline__btn" data-lot-step="2">Test and update the taxonomy on misclassified traces</button>
+                <img src="png_figures/point_down.png" alt="next step" style="width: 40px; height: 40px; object-fit: contain; align-self: center;"/>
+                <button class="timeline__btn" data-lot-step="3">Reannotate and retrain the classifier</button>
+              </div>
             </div>
             <div class="timeline__panel">
               <p class="eyebrow" id="timeline-label">Step 01</p>
-              <h3 id="timeline-title">Compare paired reasonings</h3>
-              <p id="timeline-description">LLM annotators read a pair of traces produced by two LRMs on the same prompt and verbalize distinguishing thought patterns鈥攅.g., 鈥渧erifies hypotheses before committing鈥?or 鈥渓oops through identical evidence.鈥?/p>
+              <h3 id="timeline-title">Compare reasoning traces from two LRMs and identify easoning differences</h3>
+              <p id="timeline-description">LLM annotator reads a pair of reasoning traces produced by two LRMs on the same prompt and verbalize distinguishing reasoning features. These features are used as the initial features of the taxonomy.</p>
               <div class="timeline__media">
                 <img id="timeline-image" src="png_figures/feature_generation.png" alt="LOT compares paired traces and proposes new reasoning features" />
-                <p id="timeline-caption">LLM proposes distinguishing reasoning traits (e.g., hypothesis switches) by comparing two models on the same problem.</p>
+                <p id="timeline-caption">LLM proposes distinguishing reasoning traits (e.g., "evaluating the complexity of the problem" of LRM A) by comparing two models on the same problem.</p>
               </div>
             </div>
           </div>
 
           <div class="split-grid">
             <div class="highlight-card">
-              <h4>Encoding choices</h4>
-              <p><strong>PoR</strong> records whether a behavior appears. <strong>BoR</strong> counts how often it surfaces per trace, capturing habits such as repeated self-checks or code-simulation loops that matter on longer benchmarks.</p>
+              <h4>Vector Encodings of Reasoning Traces</h4>
+              <p>To classify the source model of an unseen reasoning trace, LOT needs to convert the trace into a vector representing the observed reasoning features. We experimented with two vector encodings: a <strong>PoR</strong> vector, a binary vector where each dimension is 1 if the corresponding feature appears in the trace and 0 otherwise; and a <strong>BoR</strong> vector ∈ ℝᵈ, where each dimension records the frequency of the feature within the trace.</p>
             </div>
             <div class="highlight-card">
-              <h4>Training signal</h4>
-              <p>A logistic classifier maps annotated vectors to their source LRM. When it fails, LOT requests new features for the misclassified traces, keeping the taxonomy open-ended but grounded in data.</p>
+              <h4>Choice of Classifier</h4>
+              <p>Once the reasoning trace is converted into a vector, various classifiers can be used to identify its source model. We use logistic regression for its simplicity and interpretability (its coefficients correspond to the odds ratios of corresponding features). Other classification methods, such as KNN, Naive Bayes, and SVM, can also be used.</p>
             </div>
           </div>
         </div>
@@ -159,56 +182,64 @@
       <section id="findings" class="section section--raised">
         <div class="container">
           <div class="section__header">
-            <p class="eyebrow">Comparative insights</p>
+            <p class="eyebrow">Findings using LOT</p>
             <h2>What the taxonomy reveals about LRMs</h2>
-            <p>Each axis鈥攕cale, base family, specialization鈥攍eaves a signature in the way models explore hypotheses, verify rules, and communicate answers.</p>
+            <p>We applied LOT to classify the reasoning traces of 12 LRMs with different parameter scales, base models, and task domains. We sampled 24,444 reasoning traces across 12 LRMs on 5 datasets including GPQA-Diamond (science reasoning), MATH-500 (math), AIME (math), CRUXEVAL (code understanding), and LiveCodeBench-execution (code understanding).</p>
           </div>
 
           <article class="finding-card">
             <div>
-              <p class="eyebrow">Scaling & discipline</p>
-              <h3>Larger Qwen3 variants reason with tighter control</h3>
-              <p>LOT separates Qwen3-32B from distilled variants with 80鈥?3% accuracy on GPQA. Larger models consistently keep track of constraints, verify theories, and avoid circular evidence loops.</p>
+              <p class="eyebrow">Reasoning differences among different "brains" size</p>
+              <h3>Larger "brains" reasoning more effectively</h3>
+              <p>We applied LOT to classify the reasoning traces of Qwen3-32B and its smaller variants (0.6B, 4B, 8B, 14B). We found that the distinguishability of their thoughts decreases as the gap between parameter scales narrows. This is observed across all datasets.</p>
               <ul class="insight__points">
-                <li>BoR encodings add 3鈥?4% accuracy over PoR by tracking how frequently a behavior appears.</li>
-                <li>Smaller models re-evaluate the same fact, misapply scientific laws, and switch concepts mid-solution.</li>
+                <li>Models with larger parameter gap are more distinguishable; incorporating feature frequencies (BoR encoding) further improves the classification accuracy</li>
+                <li>Similar trends hold across other baseline classification methods (few-shot prompting, verbalized machine learning, and BoR / PoR encodings of human-defined taxonomy), but LOT with BoR encoding achieves the highest accuracy</li>
+                <li>LOT's learned taxonomy highlights clear behavioral differences: larger Qwen3 models read problem statements more carefully, check their chosen approaches against constraints, and retrieve relevant knowledge, while smaller models often re-examine the same information, apply incorrect theories, or fall into circular reasoning.</li>
               </ul>
             </div>
-            <figure>
-              <img src="png_figures/five_model_at_different_scale_larger.png" alt="Classification accuracy for Qwen3 models with different parameter scales" />
-              <figcaption>LOT remains accurate even when only reasoning traces鈥攏ot final answers鈥攁re available.</figcaption>
-            </figure>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <figure>
+                <img src="png_figures/five_model_at_different_scale_larger.png" alt="Classification accuracy for Qwen3 models with different parameter scales" />
+                <figcaption>Accuracy in classifying the reasoning traces between Qwen3-32B and <it>each</it> of its smaller variants. LOT with <span style="color: #323db9;">BoR encoding</span> and <span style="color: #ffa34d;">PoR encoding</span> achieves the highest accuracy, outperforming the human-defined taxonomy (<span style="text-decoration-style: dotted; text-decoration-line: underline;">dotted line</span>), <span style="color: #dc4343;">few-shot prompting</span>, and <span style="color: #21a42ada;">verbalized machine learning method</span>.</figcaption>
+              </figure>
+              <figure style="margin-top: 10px;">
+                <img src="png_figures/bar_boxed_bor_por_model_at_different_scales_half.png" alt="Visualization of the reasoning features of Qwen3-32B and its smaller variants." />
+                <figcaption>Reasoning features that distinguish Qwen3-32B and each of its smaller variants on GPQA-Diamond dataset. The color indicates which model exhibits the feature more frequently. The length of the bar indicates the proportion of reasoning traces from the corresponding model that exhibit the feature.</figcaption>
+              </figure>
+            </div>
           </article>
 
           <article class="finding-card">
             <div>
-              <p class="eyebrow">Base fingerprints</p>
-              <h3>Family-level priors shape reasoning cadence</h3>
-              <p>Models that share a base (e.g., Qwen derivatives) are harder to distinguish, while cross-family pairs show sharper contrasts in verification rituals and problem decomposition.</p>
+              <p class="eyebrow">Fingerprints from base models</p>
+              <h3>Models reasoning similarly if fine-tuned from the same base model</h3>
+              <p>Models that share a base (e.g., QwQ and DeepSeek-Distill-Qwen are derived from Qwen2.5) are harder to distinguish, while cross-family pairs show sharper contrasts in verification rituals and problem decomposition.</p>
               <ul class="insight__points">
-                <li>For long traces, PoR saturates but BoR still separates Phi-4-RP, Magistral, and Nemotron descendants.</li>
-                <li>Qwen3-14B simulates execution on LiveCodeBench, whereas QwQ-32B inspects parameters and recursion depth.</li>
+                <li>On simpler datasets with shorter reasoning traces, both PoR and BoR encodings of LOT can achieve high accuracy in classifying the reasoning traces from models fine-tuned from different base models (such as Qwen3-14B versus Magistral-Small).</li>
+                <li>On more complex datasets with longer reasoning traces, the accuracy of PoR drops significantly, while BoR still maintains high accuracy. This suggests that the models may employ similar set of reasoning strategies on harder problems, but differ in how frequently they employ them.</li>
               </ul>
             </div>
             <figure>
               <img src="png_figures/bor_por_model_from_different_base.png" alt="Heatmap of LOT classification accuracy across LRMs fine-tuned from different bases" />
-              <figcaption>Accuracies drop along the diagonal when base models match, revealing inherited habits.</figcaption>
+              <figcaption>Accuracies in classifying the reasoning traces from models fine-tuned from different base models on 5 datasets. The models are trained on <strong>three base model families</strong>: Qwen3, QwQ, and DeepSeek-Distill-Qwen all use <strong>Qwen-based</strong> models as their base. AceReason is RL fine-tuned from DeepSeek-Distill-Qwen. Magistral is based on <strong>Mistral</strong>. Phi-4-Reasoning-Plus is based on <strong>Phi-4</strong>. The classification accuracy is higher when the traces are from models fine-tuned from different base model families.</figcaption>
             </figure>
           </article>
 
           <article class="finding-card">
             <div>
               <p class="eyebrow">Domain inertia</p>
-              <h3>Seed-Coder brings coding reflexes to math</h3>
-              <p>Although tuned on coding data, Seed-Coder-8B-Reasoning tackles 20% of MATH-500 problems by writing and simulating Python functions, compared to 2% for Qwen3-8B.</p>
+              <h3>Reasoning model fine-tuned on coding tasks implements functions to solve math problems</h3>
+              <p>Seed-Coder-8B-Reasoning is pretrained on a mixture of math and coding data but its reasoning is fine-tuned solely on coding-related datasets. When generalize it to solve math problems, it implements and simulates Python function to tackle 20% of MATH-500 problems.</p>
               <ul class="insight__points">
-                <li>LOT exposes when specialized fine-tuning 鈥渟ticks,鈥?even off-distribution.</li>
-                <li>Such inertia can overfit solution styles and leave accuracy on the table.</li>
+                <li>In 20% of Seed-Coder's reasoning on MATH-500, it identifies the algorithm needed for solving the problem, writes pseudocode, and implement it in Python to solve the problems.</li>
+                <li>While LOT also detects “Code-based Problem Solving” in 2% of Qwen3-8B’s traces, those cases involve Asymptote code (a language for describing diagrams) in the problem statement. Qwen3-8B parses the code to interpret the diagram but does not engage in additional coding-related steps.</li>
+                <li>Scroll to next section to see the example reasoning traces that exhibit this feature.</li>
               </ul>
             </div>
             <figure>
               <img src="png_figures/short_case_study_seed_coder_por.png" alt="PoR statistics comparing Seed-Coder and Qwen3 reasoning habits" />
-              <figcaption>Seed-Coder鈥檚 coding-flavored reasoning is visible in LOT鈥檚 PoR statistics.</figcaption>
+              <figcaption>The color indicates which model exhibits the feature more frequently. The length of the bar indicates the proportion of reasoning traces from the corresponding model that exhibit the feature.</figcaption>
             </figure>
           </article>
         </div>
@@ -217,15 +248,15 @@
       <section id="patterns" class="section">
         <div class="container">
           <div class="section__header">
-            <p class="eyebrow">Reasoning vignettes</p>
-            <h2>Trace-level narratives surfaced by LOT</h2>
+            <p class="eyebrow">Example reasoning behaviors</p>
+            <h2>Interesting reasoning behaviors identified by LOT</h2>
             <p>Use the carousel to skim qualitative case studies distilled from annotated traces.</p>
           </div>
 
           <div class="case-grid">
             <div class="case-text">
-              <p class="pattern-label" id="case-label">Model 路 Dataset</p>
-              <h3 id="case-title">LOT reveals multi-step behaviors</h3>
+              <p class="pattern-label" id="case-label">Model - Dataset</p>
+              <h3 id="case-title"></h3>
               <p id="case-description">Click through the stories to see how LOT grounds quantitative differences in concrete excerpts.</p>
               <ul class="case-points" id="case-points"></ul>
               <div class="case-nav">
@@ -247,40 +278,43 @@
       <section id="interventions" class="section section--alt">
         <div class="container">
           <div class="section__header">
-            <p class="eyebrow">Closing the loop</p>
+            <p class="eyebrow">Causality of the identified reasoning differences</p>
             <h2>From reasoning gaps to performance gains</h2>
-            <p>LOT鈥檚 qualitative features double as levers for editing thoughts鈥攚ithout touching model weights.</p>
+            <p>Can reasoning differences identified by LOT be used to improve model performance?</p>
           </div>
 
           <div class="intervention-grid">
             <article class="highlight-card">
-              <h4>Odds ratios & summaries</h4>
-              <p>We compute odds ratios linking each feature to correctness (e.g., 鈥渋nconsistent application of principles鈥?vs. 鈥渧erifies constraints鈥?. Rather than issuing inline commands鈥攚hich LRMs fail to obey鈥攚e summarize the original trace, edit the summary along LOT axes, and re-expand it into a new reasoning script.</p>
+              <h4>Reasoning differences and performance gaps</h4>
+              <p>For each reasoning difference observed between Qwen-32B and one of its smaller variants, we compute the odds ratio for that feature to appear in the correct reasoning traces versus the incorrect ones.</p>
               <ul class="insight__points">
-                <li>Qwen3-0.6B/4B/8B gain 3.3鈥?.7% accuracy on GPQA.</li>
-                <li>Summaries keep edits within context limits (&lt;32K tokens).</li>
-                <li>Even unmodified re-expansions fall short, confirming edits鈥攏ot summarization鈥攄rive the gains.</li>
+                <li>We find the reasoning traits that are <strong>more frequently observed in the smaller Qwen3</strong> models' reasoning traces have <strong>lower odds ratio</strong> for appearing in the correct reasoning traces.</li>
+                <li>Editing the reasoning traces of smaller Qwen3 models to remove the reasoning traits with lower odds ratio and insert the reasoning steps with higher odds ratio <strong>improves the performance of the models on GPQA by 3.3-5.7%.</strong></li>
+                <li>We modify the reasoning traces of smaller Qwen3 models by first summarizing its original reasoning traces into a list of reasoning steps and then editing the summary to remove the reasoning steps with lower odds ratio behaviors and insert the reasoning steps with more effective behaviors. After the editing, we prompted the summary back to the model to expand it into a new reasoning trace.</li>
+                <li>Why not directly <strong>instruct the model</strong> to avoid the ineffective reasoning traits and use more effective ones? Large reasoning models turn out to be <strong>poor at following instructions</strong>, even for the simple instructions! See next section for the details.</li>
               </ul>
             </article>
             <figure class="figure-card">
-              <img src="png_figures/intervention_pipeline_boxed_sd_label.png" alt="Pipeline diagram linking odds ratios, summary edits, and improved GPQA accuracy" />
-              <figcaption>LOT-driven intervention pipeline: diagnose, summarize, edit, and expand.</figcaption>
+              <img src="png_figures/vertical_intervention_pipeline_boxed_sd_label.png" alt="Pipeline diagram linking odds ratios, summary edits, and improved GPQA accuracy" style="width: 70%; justify-self: center;" />
+              <figcaption>Editing the reasoning traces of smaller Qwen3 to use more effective reasoning strategies observed in larger Qwen3 model improve their performance on GPQA dataset.</figcaption>
             </figure>
           </div>
 
           <div class="callout">
             <div>
-              <h4>Why not direct instruction-following?</h4>
-              <p>Appendix C shows that simple requests (鈥淏egin reasoning with 鈥業 am a large language model.鈥欌€? fail on almost every LRM鈥攅ven when restricted to the first 100 thinking tokens.</p>
+              <h4>Why not directly instruct the model to use more effective reasoning strategies?</h4>
+              <p>We noticed that large reasoning models are <strong>poor at following instructions</strong>. When asking the model to slove a question from GPQA dataset while beginning their reasoning with the sentence "I am a large language model.", most of the LRMs we tested failed to generate this sentence at the beginning of their reasoning traces.</p>
               <ul class="insight__points">
-                <li>Qwen3-8B and Magistral-Small barely reach 50% compliance.</li>
-                <li>Phi-4-RP often inserts the sentence in the final answer instead of the hidden reasoning channel.</li>
-                <li>Hence LOT edits summaries instead of trusting in-context reasoning directives.</li>
+                <li>On GPQA dataset, Qwen3-8B and Magistral-Small are the only models that generate the sentence at the start of their reasoning.</li>
+                <li>Phi-4-RP inserts the sentence in the final answer instead of the hidden reasoning channel in 90% of the cases.</li>
+                <li>The rest of the models generate the sentence instead at the beginning of their <strong>non-reasoning</strong> content instead.</li>
               </ul>
             </div>
             <figure>
               <img src="png_figures/baseline_intervention_experiment_additional.png" alt="Bar chart of LRMs failing to follow instruction about the first reasoning sentence" />
-              <figcaption>Instruction-following shortfalls motivate edit-based interventions.</figcaption>
+              <figcaption>Percentage of the reasoning traces that follow the instruction "begin your reasoning with 'I am a large language model.'" (bar with solid border and no hatching). <span class="solid">Solid bar</span> indicates the percentage of the reasoning traces that generate the sentence at the start of their reasoning. 
+                <span class="hatched">Hatched bar</span> indicates the amount of reasoning that generates the sentence elsewhere in the reasoning but not at the beginning. 
+                <span class="dashed-hatched">Dashed hatched bar</span> indicates the percentage of the reasoning traces that generate the sentence at the beginning of their non-reasoning content.</figcaption>
             </figure>
           </div>
         </div>
@@ -289,22 +323,25 @@
       <section id="stability" class="section section--raised">
         <div class="container">
           <div class="section__header">
-            <p class="eyebrow">Stability & data</p>
-            <h2>The taxonomy is robust and grounded in a large corpus</h2>
+            <p class="eyebrow">Stability of LLM-generated taxonomy</p>
+            <h2>LOTs generated from different random seeds are similar</h2>
           </div>
 
           <div class="split-grid">
             <figure class="figure-card">
               <img src="png_figures/stability_phi_4_ds_qwen_better_color.png" alt="t-SNE visualization of LOT feature clusters across seeds" />
-              <figcaption>Across five random seeds, the majority of discovered features reappear in 鈮? runs.</figcaption>
+              <figcaption>Across five random seeds, the majority of discovered features reappear in at least four of the five runs.</figcaption>
             </figure>
             <div>
-              <h3>Reasoning dataset</h3>
+              <h3>LOT is stable with enough training iterations</h3>
               <ul class="insight__points">
-                <li>24,444 traces sampled with official hyperparameters from open-weight LRMs.</li>
-                <li>Neutral codenames hide model identity while annotating features.</li>
-                <li>Train/test splits: 80/20 on GPQA, MATH-500, CRUXEVAL, LCB; 75/25 on AIME.</li>
-                <li>All annotations performed with Llama3.3-70B-Instruct for consistency.</li>
+                <li>LOT uses an LLM to generate the taxonomy, and the resulting taxonomy may thus vary with random seeds.</li>
+                <li>To test the stability of LOT, we train LOT five times with different random seeds. Across the five runs, LOT produces 93 reasoning features, with an average of 18 features per run (Figure A).</li>
+                <li>We convert the feature names and definitions into sentence embeddings using gtr-t5-base model and apply DBSCAN to cluster the features, resulting in 17 clusters (Figure B).</li>
+                <li>We manually check the reasoning features in each cluster and annotate
+                their themes (see legend on the right of the figure B).</li>
+                <li>An important observation is that the reasoning taxonomies generated across 5 runs <strong>cover almost the same thematic set</strong>. Most clusters contain reasoning features generated in at least four of the five runs. Three clusters include features from three runs, two clusters include features from only two runs, and only one cluster includes the feature from a single run.</li>
+                <li>As Figure C shows, the initial features identified by LLM across runs are different. However, <strong>after a sufficient number of updates</strong> to the taxonomy, the features that are originally identified in one run gradually appear in other runs.</li>
               </ul>
             </div>
           </div>
@@ -315,19 +352,19 @@
         <div class="container">
           <div class="section__header">
             <p class="eyebrow">Resources</p>
-            <h2>Dig deeper or get in touch</h2>
+            <h2>Source Code, Data, and More</h2>
           </div>
 
           <div class="resource-grid">
             <article class="resource-card">
               <h3>Paper</h3>
-              <p>Full methodology, ablations, and appendices.</p>
-              <a class="btn" href="https://arxiv.org/pdf/2509.24147" target="_blank" rel="noreferrer noopener">Download PDF</a>
+              <p>Full methodology and findings.</p>
+              <a class="btn" href="https://arxiv.org/pdf/2509.24147" target="_blank" rel="noreferrer noopener" style="background: linear-gradient(120deg, #5db4c2, #a855f7);">Download PDF</a>
             </article>
             <article class="resource-card">
-              <h3>Camera-ready LaTeX</h3>
-              <p>Browse the exact source submitted to ICLR.</p>
-              <a class="btn btn--ghost" href="paper/characterize_the_reasoning_patterns_of_LRM.tex" target="_blank" rel="noreferrer noopener">View source</a>
+              <h3>Source Code</h3>
+              <p>Source code of LLM-proposed Open Taxonomy.</p>
+              <a class="btn btn--ghost" href="" target="_blank" rel="noreferrer noopener">GitHub</a>
             </article>
             <article class="resource-card">
               <h3>Contact</h3>
@@ -337,7 +374,7 @@
             </article>
           </div>
 
-          <div class="citation" id="citation">
+          <div class="citation" id="citation" style="margin-top: 2rem; margin-bottom: 0.2rem;">
             <h3>Citation</h3>
             <pre><code>@article{chen2025your,
   title={Your thoughts tell who you are: Characterize the reasoning patterns of LRMs},
@@ -352,7 +389,7 @@
 
     <footer>
       <div class="container footer__content">
-        <p>漏 2025 LOT for LRMs 路 Hosting on GitHub Pages.</p>
+        <p>Yida Chen, 2025.</p>
         <a class="pill pill--ghost" href="#top">Back to top</a>
       </div>
     </footer>
@@ -380,31 +417,31 @@
       const timelineData = [
         {
           label: 'Step 01',
-          title: 'Compare paired reasonings',
-          description: 'LLM annotators read paired traces and verbalize distinguishing behaviors before any taxonomy exists.',
+          title: 'Compare reasoning traces from two LRMs and identify reasoning differences',
+          description: 'LLM annotator reads a pair of reasoning traces produced by two LRMs on the same prompt and verbalize distinguishing reasoning features. These features are used as the initial features of the taxonomy.',
           image: 'png_figures/feature_generation.png',
           alt: 'LOT compares paired traces and proposes new reasoning features',
-          caption: 'LLM proposes distinguishing reasoning traits (e.g., hypothesis switches) by comparing two models.'
+          caption: 'LLM proposes distinguishing reasoning traits (e.g., "evaluating the complexity of the problem" of LRM A) by comparing two models.'
         },
         {
           label: 'Step 02',
-          title: 'Annotate across the corpus',
-          description: 'The same annotator labels other traces with the proposed features, turning long-form thoughts into PoR or BoR vectors.',
+          title: 'Annotate reasoning traces with the proposed features; fit a classifier on annotations',
+          description: 'With this initial taxonomy, the annotator annotate other traces and turn them into vector representations of the reasoning traits. A logistic classifier is fitted on the vectors and the source-model labels.',
           image: 'png_figures/feature_anotation.png',
           alt: 'LOT annotates reasoning traces with proposed features',
-          caption: 'Natural-language definitions become prompts for annotating both presence and frequency of behaviors.'
+          caption: 'The identified reasoning traits are now in the prompt for annotating other traces.'
         },
         {
           label: 'Step 03',
-          title: 'Train & diagnose',
-          description: 'A logistic classifier predicts the source LRM. Misclassified traces act as sensors for missing features.',
+          title: 'Test taxonomy + classifier on new traces; identify new features on misclassified traces',
+          description: 'We test the generalizability of the taxonomy and classifier on new traces. If the model fails to classify the new traces, it suggests that the taxonomy is incomplete. We then request the LLM to propose new features on the misclassified traces.',
           image: 'png_figures/feature_update.png',
           alt: 'LOT retrains classifiers and expands the taxonomy when misclassifications occur',
           caption: 'Classification accuracy reflects how separable the annotated behaviors are between LRMs.'
         },
         {
           label: 'Step 04',
-          title: 'Expand the taxonomy',
+          title: 'Reannotate traces using updated taxonomy; retrain the classifier on new annotations',
           description: 'When predictions fail, LOT requests new features spotted in the failed traces, keeping the taxonomy open.',
           image: 'png_figures/annotate_updated_feature.png',
           alt: 'LOT keeps adding features and refreshing annotations',
@@ -442,43 +479,54 @@
 
       const cases = [
         {
-          label: 'Seed-Coder-8B 路 MATH-500',
-          title: 'Code-first contest math',
-          description: 'Seed-Coder writes pseudocode, implements it in Python, and mentally simulates execution before answering.',
+          label: 'Seed-Coder-8B versus Qwen3-8B on MATH-500',
+          title: 'Code-based Problem Solving',
+          description: 'Seed-Coder writes pseudocode and implements it in Python to solve math problems. While both Qwen3-8B and Seed-Coder-8B take similar computational approaches to solve math problems (enumerating all proper divisors of a number), Seed-Coder-8B goes further by writing pseudocode and implementing it in Python to solve the problems.',
           points: [
-            'Coding reflex appears in ~20% of math traces, even without code in the prompt.',
-            'Qwen3-8B only exhibits this behavior when the problem already includes Asymptote diagrams.',
-            'LOT highlights why domain-specialized fine-tuning can 鈥渟tick鈥?outside its comfort zone.'
+            // 'While both Qwen3-8B and Seed-Coder-8B take similar computational approaches to solve math problems (enumerating all proper divisors of a number), Seed-Coder-8B goes further by writing pseudocode and implementing it in Python to solve the problems.',
+            // 'Qwen3-8B only exhibits this behavior when the problem already includes Asymptote diagrams.',
           ],
           image: 'png_figures/code-based-reasoning.png',
           alt: 'Seed-Coder and Qwen3 reasoning comparison on a math problem',
           caption: 'Seed-Coder solves math by enumerating states in Python-like code.'
         },
         {
-          label: 'Phi-4-RP 路 CRUXEVAL',
-          title: 'Formatting as a first-class concern',
-          description: 'Phi-4-RP repeatedly checks whether its answer is wrapped in [ANSWER] ... [/ANSWER] before submitting.',
+          label: "Qwen3-8B's code-based reasoning",
+          title: 'Code-based Problem Solving of Qwen3-8B',
+          description: 'Qwen3-8B only exhibits the code-based reasoning behavior when the problem uses Asymptote code to describe a diagram necessary for solving the problem.',
           points: [
-            'Formatting loops consume multiple reasoning steps absent in AceReason.',
-            'Behavior aligns with regex-based reward models used during RL training.',
-            'Ensuring parseable outputs matters for automatic evaluation pipelines.'
+            // 'While both Qwen3-8B and Seed-Coder-8B take similar computational approaches to solve math problems (enumerating all proper divisors of a number), Seed-Coder-8B goes further by writing pseudocode and implementing it in Python to solve the problems.',
+            // 'Qwen3-8B only exhibits this behavior when the problem already includes Asymptote diagrams.',
           ],
-          image: 'png_figures/case_study_bor_crux.png',
-          alt: 'Radar chart comparing Phi-4-RP and AceReason reasoning features on CRUXEVAL',
-          caption: 'Phi-4-RP invests extra effort to meet strict output templates.'
+          image: 'png_figures/qwen-code-based-reasoning.png',
+          alt: 'Qwen3-8B reasoning on a math problem that uses Asymptote code to describe a diagram',
+          caption: 'Reasoning trace of Qwen3-8B that LOT annotates as "Code-based Problem Solving". Qwen3-8B only attempts to understand the diagram described in Asymptote code, but does not engage in additional coding-related steps.'
         },
         {
-          label: 'Qwen3-32B 路 GPQA',
-          title: 'Textual molecular sketches',
-          description: 'Qwen models rewrite IUPAC names into structural formulas mid-reasoning to track bonds and valence.',
+          label: 'Phi-4-reasoning-plus versus AceReason on CRUXEVAL',
+          title: 'Output format as a first-class concern',
+            description: "The question prompt from CRUXEVAL dataset requires the model to put their final answer within [ANSWER] and [/ANSWER] tags with no extra words. Phi-4-reasoning-plus <strong>excessively</strong> checks its answer to make sure it follows this requirement: <br><blockquote>[Previous reasoning ......]<br>Thus answer: 9.<br>But wait: The question says ”complete the assert statement with the output when executing the code on the given test case”. And then it says ”Your answer should be [ANSWER] [Expected outputs] [/ANSWER]” with no extra words.<br>Thus answer: [ANSWER]9[/ANSWER]. But careful: The instructions say “Do not output any extra information, even if the function is incorrect or incomplete.” So answer should be exactly that.<br>I'll produce the answer in the specified format: [ANSWER]9[/ANSWER]. I need to output answer with no extra words. So answer: [ANSWER]9[/ANSWER].</blockquote>",
           points: [
-            'LOT surfaces a 鈥渧isualize molecular structure鈥?feature even in text-only models.',
-            'Writing ASCII diagrams helps models reason about chemical constraints.',
-            'Highlights multimodal-style thinking emerging from purely textual training.'
+            'Phi-4-reasoning-plus allocates multiple steps to restate the formatting requirement before giving the answer.',
+            'This cautious habit is also observed in other models such as AceReason but to a lesser extent.',
+            "This subtle behavior, nonetheless, is understandable: during RL training, the rule-based reward function only grants credit when the model's answer is wrapped in a parsable format (i.e., [ANSWER] ... [/ANSWER])."
+          ],
+          image: 'png_figures/case_study_bor_crux.png',
+          alt: 'Radar chart comparing Phi-4-reasoning-plus and AceReason reasoning features on CRUXEVAL',
+          caption: 'Phi-4-reasoning-plus invests extra effort to meet strict output templates.'
+        },
+        {
+          label: 'Attempting to visualize molecular structure on GPQA',
+          title: '"Visualizing" molecular structure',
+          description: 'When solving chemistry problems, Qwen3-32B and Qwen3-8B attempt to "visualize" the chemical bonds of a compound by writing out their structural formulas:',
+          points: [
+            'Qwen3-32B and Qwen3-8B rewrite IUPAC names into structural formulas mid-reasoning to track bonds within the compound.',
+            'Qwen3-32B even uses the word "draw" in its reasoning trace.',
+            'Although this seems to be an advanced reasoning strategy, it is not necessarily helpful for solving the problem correctly. As one can see in the example, accurately representing complex chemical structures (e.g., rings) in plain text is challenging.',
           ],
           image: 'png_figures/visualize-molecular-structure-reasoning.png',
-          alt: 'Examples of Qwen3 models spelling out structural formulas while solving GPQA',
-          caption: 'Qwen3 invents textual sketches to reason about molecules without images.'
+          alt: 'Examples of Qwen3-32B and Qwen3-8B spelling out structural formulas while solving GPQA',
+          caption: 'Qwen3-32B and Qwen3-8B attempt to "visualize" the chemical bonds of a compound by writing out their structural formulas.'
         }
       ];
 
@@ -499,7 +547,7 @@
         if (!data) return;
         caseLabel.textContent = data.label;
         caseTitle.textContent = data.title;
-        caseDescription.textContent = data.description;
+        caseDescription.innerHTML = data.description;
         casePoints.innerHTML = data.points.map((point) => '<li>' + point + '</li>').join('');
         caseImage.src = data.image;
         caseImage.alt = data.alt;
