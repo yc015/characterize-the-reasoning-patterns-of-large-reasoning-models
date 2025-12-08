@@ -289,12 +289,11 @@
           <div class="intervention-grid">
             <article class="highlight-card">
               <h4>Reasoning differences and performance gaps</h4>
-              <p>For each reasoning difference observed between Qwen-32B and one of its smaller variants, we compute the odds ratio for that feature to appear in the correct reasoning traces versus the incorrect ones.</p>
+              <p>For each reasoning difference observed between Qwen-32B and one of its smaller variants, we compute the <strong>odds ratio</strong> for that feature to appear in the correct reasoning traces versus the incorrect ones.</p>
               <ul class="insight__points">
                 <li>We find the reasoning traits that are <strong>more frequently observed in the smaller Qwen3</strong> models' reasoning traces have <strong>lower odds ratio</strong> for appearing in the correct reasoning traces.</li>
                 <li>Editing the reasoning traces of smaller Qwen3 models to remove the reasoning traits with lower odds ratio and insert the reasoning steps with higher odds ratio <strong>improves the performance of the models on GPQA by 3.3-5.7%.</strong></li>
-                <li>We modify the reasoning traces of smaller Qwen3 models by first summarizing its original reasoning traces into a list of reasoning steps and then editing the summary to remove the reasoning steps with lower odds ratio behaviors and insert the reasoning steps with more effective behaviors. After the editing, we prompted the summary back to the model to expand it into a new reasoning trace.</li>
-                <li>Why not directly <strong>instruct the model</strong> to avoid the ineffective reasoning traits and use more effective ones? Large reasoning models turn out to be <strong>poor at following instructions</strong>, even for the simple instructions! See next section for the details.</li>
+                <li>One exception is Qwen3-1.7B, likely due to its <strong>poor instruction-following</strong> capability (see next section for the details).</li>
               </ul>
             </article>
             <figure class="figure-card">
@@ -305,11 +304,12 @@
 
           <div class="callout">
             <div>
-              <h4>Why not directly instruct the model to use more effective reasoning strategies?</h4>
-              <p>We noticed that large reasoning models are <strong>poor at following instructions</strong>. When asking the model to slove a question from GPQA dataset while beginning their reasoning with the sentence "I am a large language model.", most of the LRMs we tested failed to generate this sentence at the beginning of their reasoning traces.</p>
+              <h4>Why not instruct the model to use more effective reasoning strategies?</h4>
+              <p>Why edit the reasoning traces instead of directly instructing the model to use more effective reasoning strategies? We noticed that large reasoning models are <strong>poor at following instructions</strong>. When asking the model to solve a question from GPQA dataset while beginning their reasoning with the sentence "I am a large language model.", most of the LRMs we tested failed to generate this sentence at the beginning of their reasoning traces.</p>
               <ul class="insight__points">
                 <li>On GPQA dataset, Qwen3-8B and Magistral-Small are the only models that generate the sentence at the start of their reasoning.</li>
                 <li>Phi-4-RP inserts the sentence in the final answer instead of the hidden reasoning channel in 90% of the cases.</li>
+                <li>Qwen3-1.7B performs the worst, almost never generating the sentence in its entire outputs.</li>
                 <li>The rest of the models generate the sentence instead at the beginning of their <strong>non-reasoning</strong> content instead.</li>
               </ul>
             </div>
