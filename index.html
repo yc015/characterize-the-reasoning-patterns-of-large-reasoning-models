@@ -96,13 +96,13 @@
           <div class="metrics-grid">
             <article class="metric-card">
               <h3>Addressing the limitations of existing APE methods on long text classification</h3>
-              <p>Existing APE methods generate the classification instruction either by selecting from predefined candidates (non-inductive) or by requiring LLMs to extract patterns from a large data batch in one forward pass, impractical for classifying long-text (such as reasoning traces).</p> 
-              <p>LOT overcomes these limitations by decoupling the generation of the classification "model" into <strong>feature proposal</strong> stage and <strong>parameter tuning</strong> stage, performed in separate forward passes.</p>
+              <!-- <p>Existing APE methods generate the classification instruction either by selecting from predefined candidates (non-inductive) or by requiring LLMs to extract patterns from a large data batch in one forward pass, impractical for classifying long-text (such as reasoning traces).</p> 
+              <p>LOT overcomes these limitations by decoupling the generation of the classification "model" into <strong>feature proposal</strong> stage and <strong>parameter tuning</strong> stage, performed in separate forward passes.</p> -->
             </article>
             <article class="metric-card">
-              <h3>Comprehensive evaluation on 12 LRMs over 5 datasets</h3>
-              <p>We applied LOT to classify the reasoning traces of 12 LRMs including Qwen3, QwQ, DeepSeek-R1 Distills, AceReason-Nemotron, Phi-4-Reasoning-Plus, Magistral-Small, and Seed-Coder-8B-Reasoning on 5 datasets including GPQA-Diamond, MATH-500, AIME, CRUXEVAL, and LiveCodeBench.</p>
-              <p>LOT achieves 80-100% accuracy in classifying the reasoning traces, outperforming few-shot prompt, human-defined taxonomy, and verbalized machine learning (APE-like) method by up to 23.8%</p>
+              <h3>Applied LOT to identify reasoning differences among 12 LRMs over 5 datasets</h3>
+              <!-- <p>We applied LOT to classify the reasoning traces of 12 LRMs including Qwen3, QwQ, DeepSeek-R1 Distills, AceReason-Nemotron, Phi-4-Reasoning-Plus, Magistral-Small, and Seed-Coder-8B-Reasoning on 5 datasets including GPQA-Diamond, MATH-500, AIME, CRUXEVAL, and LiveCodeBench.</p>
+              <p>LOT achieves 80-100% accuracy in classifying the reasoning traces, outperforming few-shot prompt, human-defined taxonomy, and verbalized machine learning (APE-like) method by up to 23.8%</p> -->
             </article>
             <!-- <article class="metric-card">
               <h3>Outperform existing APE method and human-defined taxonomy</h3>
@@ -110,9 +110,9 @@
             </article> -->
             
             <article class="metric-card">
-              <h3>Reasoning features identified by LOT has causal impact on performance</h3>
-              <p>As a case study, we analyze the correlation between the occurrence of reasoning features identified by LOT and the performance of the Qwen3 models on the GPQA dataset. We notice that the reasoning traits of the smaller Qwen3 models are more frequently associated with incorrect reasoning than the habits of the larger Qwen3-32B.</p>
-              <p>Editing the reasoning traces of smaller Qwen3 models to align with the habits of Qwen3-32B yields +3.3-5.7% accuracy gain on GPQA for smaller Qwen3 models.</p>
+              <h3>CASE STUDY: Reasoning features identified by LOT has causal impact on Qwen3 models' performance</h3>
+              <!-- <p>As a case study, we analyze the correlation between the occurrence of reasoning features identified by LOT and the performance of the Qwen3 models on the GPQA dataset. We notice that the reasoning traits of the smaller Qwen3 models are more frequently associated with incorrect reasoning than the habits of the larger Qwen3-32B.</p>
+              <p>Editing the reasoning traces of smaller Qwen3 models to align with the habits of Qwen3-32B yields +3.3-5.7% accuracy gain on GPQA for smaller Qwen3 models.</p> -->
             </article>
           </div>
 
@@ -139,6 +139,7 @@
             <p class="eyebrow">How LOT works</p>
             <h2>Inductively construct a taxonomy of LLM's distinct reasoning habits</h2>
             <p>LOT is inspired by the inductive coding process in qualitative research. The LLM first compares two reasoning traces from different LRMs and identifies their distinguishing reasoning features (<strong>a local observation</strong>). It then annotates these proposed features across a larger set of reasoning traces from the two LRMs and fits a linear statistical model using the annotations and their source-model labels (<strong>calibrating the local observation with more data processed in separate forward passes</strong>). The algorithm tests the taxonomy and model on classifying new traces. If the model fails, it branches to expand the taxonomy and repeats the process until no misclassifications occur or no new reasoning differences are identified (<strong>evolving the open taxonomy</strong>).</p>
+            <p>Unlike existing APE methods, LOT does not require an initial pool of candidate classification instructions. It also avoids requiring LLMs to extract patterns from a large batch of data in a single forward pass, which is impractical when dealing with long-form text such as reasoning traces.</p>
 
           </div>
 
@@ -338,12 +339,11 @@
               <h3>LOT is stable with enough training iterations</h3>
               <ul class="insight__points">
                 <li>LOT uses an LLM to generate the taxonomy, and the resulting taxonomy may thus vary with random seeds.</li>
-                <li>To test the stability of LOT, we train LOT five times with different random seeds. Across the five runs, LOT produces 93 reasoning features, with an average of 18 features per run (Figure A).</li>
-                <li>We convert the feature names and definitions into sentence embeddings using gtr-t5-base model and apply DBSCAN to cluster the features, resulting in 17 clusters (Figure B).</li>
-                <li>We manually check the reasoning features in each cluster and annotate
-                their themes (see legend on the right of the figure B).</li>
-                <li>An important observation is that the reasoning taxonomies generated across 5 runs <strong>cover almost the same thematic set</strong>. Most clusters contain reasoning features generated in at least four of the five runs. Three clusters include features from three runs, two clusters include features from only two runs, and only one cluster includes the feature from a single run.</li>
-                <li>As Figure C shows, the initial features identified by LLM across runs are different. However, <strong>after a sufficient number of updates</strong> to the taxonomy, the features that are originally identified in one run gradually appear in other runs.</li>
+                <li>We test the stability of LOT by training LOT five times, and check the similarity of the taxonomies generated by each run.</li>
+                <!-- <li>To test the stability of LOT, we train LOT five times with different random seeds. Across the five runs, LOT produces 93 reasoning features, with an average of 18 features per run (Figure A).</li> -->
+                <li>Figure A shows the sentence embeddings of the reasoning features identified by LOT in five runs. We apply DBSCAN to cluster the features, and manullay anntotate the themes of the clusters (Figure B).</li>
+                <li>An important observation is that the reasoning taxonomies generated across 5 runs <strong>cover almost the same thematic set</strong>. Eleven clusters (themes) contain reasoning features generated in at least four of the five runs. Three clusters include features from three runs, two clusters include features from only two runs, and only one cluster includes the feature from a single run.</li>
+                <li>As Figure C shows, the initial features identified by LLM across runs are different. However, <strong>after multiple updates</strong> to the taxonomy, the features that are originally identified in one run gradually appear in other runs.</li>
               </ul>
             </div>
           </div>
